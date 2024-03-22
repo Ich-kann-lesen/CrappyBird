@@ -1,18 +1,16 @@
 import pygame, sys, time
 from random import randint
 
-"""
-TO DO:
-
-
-
-"""
-
+# basic stuff
 WIDTH = 480
 HEIGHT = 800
 FRAMERATE = 60
 
 class BG(pygame.sprite.Sprite):
+"""Vor.: 'groups' ist eine Gruppe von Sprites, 'scale_factor' ist ein positiver Faktor zur Skalierung.
+Erf.: Erstellt ein Hintergrund-Sprite mit der skalierten Hintergrundgrafik.
+Erg.: Ein BG-Sprite-Objekt wird erstellt."""
+
 	def __init__(self,groups,scale_factor):
 		super().__init__(groups)
 		bg_image = pygame.image.load('..\\graphics\\environment\\background.png').convert()
@@ -29,12 +27,17 @@ class BG(pygame.sprite.Sprite):
 		self.pos = pygame.math.Vector2(self.rect.topleft)
 
 	def update(self,dt):
+# move the background so that it looks cool
 		self.pos.x -= 300 * dt
 		if self.rect.centerx <= 0:
 			self.pos.x = 0
 		self.rect.x = round(self.pos.x)
 
 class Ground(pygame.sprite.Sprite):
+"""Vor.: 'groups' ist eine Gruppe von Sprites, 'scale_factor' ist ein positiver Faktor zur Skalierung.
+Erf.: Erstellt ein Boden-Sprite mit der skalierten Bodengrafik.
+Erg.: Ein Ground-Sprite-Objekt wird erstellt."""
+
 	def __init__(self,groups,scale_factor):
 		super().__init__(groups)
 		self.sprite_type = 'ground'
@@ -51,6 +54,7 @@ class Ground(pygame.sprite.Sprite):
 		self.mask = pygame.mask.from_surface(self.image)
 
 	def update(self,dt):
+# move the ground so that it looks cool
 		self.pos.x -= 360 * dt
 		if self.rect.centerx <= 0:
 			self.pos.x = 0
@@ -58,6 +62,10 @@ class Ground(pygame.sprite.Sprite):
 		self.rect.x = round(self.pos.x)
 
 class Bird(pygame.sprite.Sprite):
+"""Vor.: 'groups' ist eine Gruppe von Sprites, 'scale_factor' ist ein positiver Faktor zur Skalierung.
+Erf.: Erstellt ein Vogel-Sprite mit Animationen und Schwerkraft.
+Erg.: Ein Bird-Sprite-Objekt wird erstellt."""
+
 	def __init__(self,groups,scale_factor):
 		super().__init__(groups)
 
@@ -75,7 +83,7 @@ class Bird(pygame.sprite.Sprite):
 		self.direction = 0
 
 		# mask
-		self.mask = pygame.mask.from_surface(self.image)
+		self.mask = pygame.mask.from_surface(nself.image)
 
 	def import_frames(self,scale_factor):
 		self.frames = []
@@ -109,6 +117,11 @@ class Bird(pygame.sprite.Sprite):
 		self.rotate()
 
 class Obstacle(pygame.sprite.Sprite):
+"""Vor.: 'groups' ist eine Gruppe von Sprites, 'scale_factor' ist ein positiver Faktor zur Skalierung,
+'isBottom' ist ein boolscher Wert, der angibt, ob das Hindernis unten ist, 'pipeHeight' ist die Höhe des Hindernisses.
+Erf.: Erstellt ein Hindernis-Sprite mit der skalierten Hindernisgrafik.
+Erg.: Ein Obstacle-Sprite-Objekt wird erstellt."""
+
 	def __init__(self,groups,scale_factor, isBottom, pipeHight):
 		super().__init__(groups)
 		self.sprite_type = 'obstacle'
@@ -131,12 +144,17 @@ class Obstacle(pygame.sprite.Sprite):
 		self.mask = pygame.mask.from_surface(self.image)
 
 	def update(self,dt):
+# move the pipe so that it looks cool
 		self.pos.x -= 400 * dt
 		self.rect.x = round(self.pos.x)
 		if self.rect.right <= -100:
 			self.kill()
 
 class Game:
+"""Vor.: -
+Erf.: Initialisiert das Spiel und steuert den Spielablauf.
+Erg.: Ein Game-Objekt wird erstellt um das Spiel zu starten."""
+
 	def __init__(self):
 		
 		# setup
@@ -261,9 +279,9 @@ class Game:
 			pygame.display.update()
 			self.clock.tick(FRAMERATE)
 
-if __name__ == '__main__':
-	game = Game()
-	game.run()
+# Spiel starten
+game = Game()
+game.run()
 
 
 
